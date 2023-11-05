@@ -29,7 +29,7 @@ Otra suposición que se ha hecho es que la grid es infinita, y me va a poder sum
 ## Tests
 Los tests que se han realizado son sobre la logica del programa. Es decir, sobre el controller. Los diferentes casos que se han testeado son los siguientes:
 
-https://github.com/AlvaroArrabal/sonnenBatteryTest/blob/main/assets/tests.png
+![Tests](https://github.com/AlvaroArrabal/sonnenBatteryTest/blob/main/assets/tests.png)
 
 Destacar que harian falta mas tests, pero en este caso, como la logica del sistema esta en calcular la potencia y manejarla, se han testeado los posibles casos que pueden suceder. En estos tests, se han metido los tests de constructores, seters y geters. Sin embargo, seguramente lo apropiado seria realizar mas tests unitarios y no meter estos tests en el test de calcular la potencia.
 
