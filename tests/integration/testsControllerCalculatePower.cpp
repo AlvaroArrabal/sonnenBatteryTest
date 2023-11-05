@@ -11,7 +11,7 @@ static const int Basic = 2;
 static const int Standard = 3;
 static const int Pro = 5;
 
-void test_pvPowerGreaterThanHousePower_withoutBMS()
+void test_pvPowerGreaterThanHousePower_withoutBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -41,10 +41,10 @@ void test_pvPowerGreaterThanHousePower_withoutBMS()
     assert(controller->getActualBMSCapacity() == 1750);
     assert(grid->getPowerInWatts() == 0);
 
-    std::cout << "Test -> PV power > House power without BMS - OK" << std::endl;
+    std::cout << "Test -> PV power > House power without BMS Power - OK" << std::endl;
 }
 
-void test_pvPowerGreaterThanHousePower_withBMS()
+void test_pvPowerGreaterThanHousePower_withBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -74,10 +74,10 @@ void test_pvPowerGreaterThanHousePower_withBMS()
     assert(controller->getActualBMSCapacity() == 750);
     assert(grid->getPowerInWatts() == 0);
 
-    std::cout << "Test -> PV power > House power with BMS    - OK" << std::endl;
+    std::cout << "Test -> PV power > House power with BMS Power    - OK" << std::endl;
 }
 
-void test_pvPowerLessThanHousePower_withoutBMS()
+void test_pvPowerLessThanHousePower_withoutBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -107,10 +107,10 @@ void test_pvPowerLessThanHousePower_withoutBMS()
     assert(controller->getActualBMSCapacity() == 2000);
     assert(grid->getPowerInWatts() == -350);
 
-    std::cout << "Test -> PV power < House power without BMS - OK" << std::endl;
+    std::cout << "Test -> PV power < House power without BMS Power - OK" << std::endl;
 }
 
-void test_pvPowerLessThanHousePower_withBMS()
+void test_pvPowerLessThanHousePower_withBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -140,10 +140,10 @@ void test_pvPowerLessThanHousePower_withBMS()
     assert(controller->getActualBMSCapacity() == 1350);
     assert(grid->getPowerInWatts() == 0);
 
-    std::cout << "Test -> PV power < House power with BMS    - OK" << std::endl;
+    std::cout << "Test -> PV power < House power with BMS Power    - OK" << std::endl;
 }
 
-void test_pvPowerEqualToHousePower_withoutBMS()
+void test_pvPowerEqualToHousePower_withoutBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -173,10 +173,10 @@ void test_pvPowerEqualToHousePower_withoutBMS()
     assert(controller->getActualBMSCapacity() == 2000);
     assert(grid->getPowerInWatts() == 0);
 
-    std::cout << "Test -> PV power = House power without BMS - OK" << std::endl;
+    std::cout << "Test -> PV power = House power without BMS Power - OK" << std::endl;
 }
 
-void test_pvPowerEqualToHousePower_withBMS()
+void test_pvPowerEqualToHousePower_withBMSPower()
 {
     Grid *grid = new Grid();
     PV *pv = new PV();
@@ -198,18 +198,18 @@ void test_pvPowerEqualToHousePower_withBMS()
     assert(controller->getActualBMSCapacity() == 1000);
     assert(grid->getPowerInWatts() == 0);
 
-    std::cout << "Test -> PV power = House power with BMS    - OK" << std::endl;
+    std::cout << "Test -> PV power = House power with BMS Power    - OK" << std::endl;
 }
 
 int main()
 {
-    test_pvPowerGreaterThanHousePower_withoutBMS();
-    test_pvPowerLessThanHousePower_withoutBMS();
-    test_pvPowerEqualToHousePower_withoutBMS();
+    test_pvPowerGreaterThanHousePower_withoutBMSPower();
+    test_pvPowerLessThanHousePower_withoutBMSPower();
+    test_pvPowerEqualToHousePower_withoutBMSPower();
 
-    test_pvPowerGreaterThanHousePower_withBMS();
-    test_pvPowerLessThanHousePower_withBMS();
-    test_pvPowerEqualToHousePower_withBMS();
+    test_pvPowerGreaterThanHousePower_withBMSPower();
+    test_pvPowerLessThanHousePower_withBMSPower();
+    test_pvPowerEqualToHousePower_withBMSPower();
 
     return 0;
 }
