@@ -1,63 +1,63 @@
-## Uso Aplicacion
-> **make help**: muestra por pantalla todas las opciones disponibles (opcion por defecto si se pone unicamente make)
+## Application Usage
+> **make help**: displays all available options on screen (default option if only make is set)
 
-* Esta aplicacion tiene dos modos de uso y cada uno de ellos se ejcuta con los siguientes comandos:
+* This application has two modes of use and each of them is executed with the following commands:
   >     $ make runTests
 
 
-  **make runTest**: con este modo se ejcutan los test que se especifican en el apartado de *Tests*. 
+  **make runTest**: This command, it runs the tests that are specified in the *Tests* section.
 
   >     $ make run
 
-  **make run**: con este modo se ejecuta la aplicacion con un caso de uso. 
+  **make run**: This command runs the application with a use case. 
 
 
-* Si se quiere utilizar el docker, seguir la siguiente secuencia de pasos:
+* If you want to use Docker, follow the sequence of steps below:
   >     $ make up
 
-  **make up**: levanta el container.
+  **make up**: brings up the container.
   >     $ make enter
 
-  **make enter**: entra dentro del contenedor con el compilador.
+  **make enter**: enters the container with the compiler.
   >     $ make run
 
-  **make run**: dentro del contenedor, ejecutará la aplicación.
+  **make run**: inside the container, it will run the application.
   >     $ make runTests
 
-  **make runTests**: dentro del contenedor, ejecutará los tests
+  **make runTests**: nside the container, it will execute the tests.
 
 
-Con los comandos "**run**" y "**runTest**", se compilan y ejecutan las partes.
+With the "**run**" and "**runTest**" commands, the parts are compiled and executed. 
 
 ## Introduction
-El proyecto está estructurado en cuatro componentes principales para separar las responsabilidades y facilitar la escalabilidad y el mantenimiento. Es un diseño relativamente genérico y esta distribución puede ser distinta a la estándar:
-- **Dominio**
-> Contiene las definiciones de las interfaces esenciales (Grid, House, PV, Storage). Estas abstracciones son clave para entender las operaciones que el sistema puede realizar, independientemente de su implementación, se va a mantener constante.
-- **Infraestructura**
-> InfraestructuraImplementa las interfaces definidas en el Dominio. Aquí, cambios en la lógica no requieren alteraciones en las definiciones de dominio.
-- **Aplicacion**
-> Aloja los casos de uso del sistema, en este caso, el cálculo de la potencia del sistema. 
+The project is structured into four main components to separate responsibilities and to facilitate scalability and maintenance. It is a relatively generic design, and this layout may differ from the standard one:
+- **Domain**
+> It contains the definitions of the essential interfaces (Grid, House, PV, Storage). These abstractions are key to understanding the operations that the system can perform and will remain constant regardless of their implementation.
+- **Infrastructure**
+> It implements the interfaces defined in the Domain. Here, changes in logic do not require alterations in the domain definitions.
+- **Application**
+> It encases the system's use cases, in this case, the calculation of the system's power. 
 - **Bootstrap**
-> Es el punto de entrada del sistema donde se configura y se inicia la aplicación. Aquí se instancian y se conectan todos los componentes necesarios para el caso de uso específico.
+> It is the system's entry point where the application is configured and initiated. Here, all the necessary components are instantiated and connected for the specific use case.
 
-## Suposiciones
-En la arquitectura de nuestro sistema, hemos adoptado la suposición de que cada entidad de Storage es manejada por un único Controller. Esta decisión simplifica la estructura del código al evitar la creación de clases intermedias innecesarias, dado que la lógica de gestión energética reside directamente en el Controller. Aunque este enfoque favorece la simplicidad y la claridad actual, se mantiene flexible para futuras expansiones donde múltiples Controllers puedan requerir una clase Storage separada para gestionarlos colectivamente. 
+## Assumptions
+In our system architecture, we have adopted the assumption that each Storage entity is managed by a single Controller. This decision simplifies the code structure by avoiding the creation of unnecessary intermediate classes, since the energy management logic resides directly in the Controller. While this approach favors current simplicity and clarity, it remains flexible for future expansions where multiple Controllers may require a separate Storage class to manage them collectively.
 
-Cada Controller está formado por un Inverter y un vector con el número de baterías disponibles dependiendo del setup escogido (Basic, Standard, Pro).
+Each Controller consists of an Inverter and a vector with the number of batteries available according to the selected setup (Basic, Standard, Pro).
 
-Con esta suposición, el controller es el que maneja el flujo de potencia de la batería, por ello, se han definido las funciones de charge y discharge en controller. 
-Con el inverter se decide si es necesario cargar o descargar las baterías. La implementación de la lógica para determinar esto se ha hecho en la función de calculatePower de Controller. Este proceso, que hace uso del inverter, se podría haber implementado en el propio inverter, ya que es quien decide que se hace.
-De igual manera, se ha supuesto que las baterías se van llenando de una en una y no se empieza a llenar/vaciar una batería hasta que la anterior esté llena/vacía.
+With this assumption, the controller is responsible for managing the power flow from the battery, which is why the charge and discharge functions have been defined in the controller. It is the inverter that decides whether it is necessary to charge or discharge the batteries. The implementation of the logic to determine this has been done in the Controller's calculatePower function. This process, which utilizes the inverter, could have been implemented in the inverter itself, since it is the one that makes the decision.
 
-Otra suposición que se ha hecho es que la grid es infinita, y me va a poder suministrar siempre la potencia necesaria. Si esto no fuera así, el sistema que he desarrollado no estaría preparado para ello, si no hay potencia almacenada en las baterías. Entiendo que, en ese caso, se debería implementar una función/lógica para apagar el sistema, o elegir a que se le da potencia, etc…
+Similarly, it has been assumed that the batteries are filled one by one, and a battery does not begin to be filled or emptied until the previous one is full or empty.
 
-* Se entiende que los setters sobre los elementos con los que interactua el controller no tienen sentido, se han implementado para poder utilizar el programa.
+Another assumption made is that the grid has infinite capacity, and will always be able to supply the necessary power. If this were not the case, the developed system would not be prepared to handle such a scenario if there is no power stored in the batteries. It is understood that in such a scenario, a function or logic should be implemented to either shut down the system or to choose what to prioritize for power distribution, etc.
+
+* It is understood that setters for the elements with which the controller interacts do not make sense in the context of the system's operations; they have been implemented for the purpose of using the program.
 
 ## Tests
 
-Se ha realizado un test unitario sobre Controller.calculatePower() donde contemplamos todos los casos de uso sobre esa función. Los diferentes casos que se han testeado son los siguientes:
+A unit test has been carried out on Controller.calculatePower() where all use cases concerning that function are considered. The different cases that have been tested are the following:
 
   ![Tests](https://github.com/AlvaroArrabal/sonnenBatteryTest/blob/main/assets/tests.png)
 
-Además se aprovecha para testear indirectamente los setters y los getters de las demás entidades; estos asserts deberían ejecutarse en tests unitarios separados. Destacar que harian falta mas tests, pero en este caso, como la logica del sistema esta en calcular la potencia y manejarla, se han testeado los posibles casos que pueden suceder.
+Additionally, the opportunity is taken to indirectly test the setters and getters of the other entities; these asserts should be performed in separate unit tests. It should be noted that more tests would be necessary, but in this case, as the logic of the system is focused on calculating and managing power, the possible scenarios that could occur have been tested.
 
