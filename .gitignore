@@ -1,0 +1,4 @@
+exec.sh
+.idea
+bin/*
+.vscode
