@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: compiler
+    image: gcc:5.5
+    working_dir: /app
+    tty: true
+    volumes:
+      - .:/app

@@ -57,4 +57,11 @@ build: clean createFolders $(OBJS_APP) ## Builds the App
 run: build## Builds the App and runs it
 	./$(EXEC)
 
+## —— Docker commands —————————————————————————————————————————
 
+up: ## up docker container
+	docker-compose -f dev-docker-compose.yml up -d
+down: ## down
+	docker-compose -f dev-docker-compose.yml down
+enter: ## enter to docker container with compiler
+	docker exec -it compiler /bin/bash

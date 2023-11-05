@@ -1,12 +1,3 @@
-/*
-pvPower ~ housePower    BMSstate
-1    >                  tengan
-2    >                  no tengan
-3    <                  tengan
-4    <                  no tengan
-5    =                  tengan
-6    =                  no tengan
-*/
 #include "../../src/Domain/Grid/Grid.h"
 #include "../../src/Domain/House/House.h"
 #include "../../src/Domain/PV/PV.h"
